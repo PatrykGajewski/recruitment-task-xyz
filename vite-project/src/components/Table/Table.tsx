@@ -2,9 +2,9 @@ import type { TableProps } from "./types";
 import { getOrderString, getNextSortDirection } from "./utils";
 
 const Table = <T extends string>({columns, rows, onSortChange, caption}: TableProps<T>) => (
-    <table>
+    <table style={{maxHeight: '100%'}}>
         {caption && <caption>{caption}</caption>}
-        <thead>
+        <thead style={{ position: 'sticky', top: 0, backgroundColor: 'white'}}>
             <tr>
                 {columns.map((column) => (
                     <th

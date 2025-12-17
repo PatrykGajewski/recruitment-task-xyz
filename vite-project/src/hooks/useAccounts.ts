@@ -8,7 +8,7 @@ export interface AccountResponse {
     currency: string;
 }
 
-export const useAccounts = () => {
+export const useAccounts = (limit: number, offset: number) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState<AccountResponse[]>([]);
@@ -16,7 +16,9 @@ export const useAccounts = () => {
     useEffect(() => {
         const fetchAccountTypes = async () => {
             try {
-                const response = await (await APIService.getAccounts()).json();
+                const response = await (await APIService.getAllAccounts(
+                    new Map([['limit', limit], ['offset', offset]])
+                )).json();
 
                 setData(response);
             } catch (error) {
@@ -28,7 +30,7 @@ export const useAccounts = () => {
         };
 
         fetchAccountTypes();
-    }, []);
+    }, [limit, offset]);
 
     return { data, isLoading, isError };
 };

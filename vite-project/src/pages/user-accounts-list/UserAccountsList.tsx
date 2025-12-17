@@ -7,10 +7,16 @@ import { useMemo, useState } from "react";
 
 import { UserAccountColumn } from "./types";
 import { columnsConfig, sortingPerColumn } from "./config";
+import Pagination from "../../components/pagination/Pagination";
 
 const UserAccountsPage = () => {
+  // NOTE: let's assume that limit is known and fixed for this example
+  const [limit, setLimit] = useState(100);
+  const [offset, setOffset] = useState(0);
+  // NOTE: let's assume total number of accounts is known and fixed for this example
+  const [total, setTotal] = useState(2000);
   const accountTypes = useAccountTypes();
-  const users = useAccounts();
+  const users = useAccounts(limit, offset);
 
   const [sortConfig, setSortConfig] =  useState<{columnId: UserAccountColumn; direction: SortDirection} | null>({
     columnId: UserAccountColumn.Id,
@@ -52,11 +58,21 @@ const UserAccountsPage = () => {
 
   return (
     <div className="container">
-      <Table
-        columns={memoizedColumns}
-        rows={memoizedTableData}
-        onSortChange={onSortChange}
-      />
+        <div className="table-container" style={{ overflowY: 'auto', height: '80vh' }}>
+          <Table
+            columns={memoizedColumns}
+            rows={memoizedTableData}
+            onSortChange={onSortChange}
+          />
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh' }}>
+          <Pagination
+            limit={limit}
+            offset={offset}
+            onOffsetChange={setOffset}
+            total={total}
+          />
+      </div>
     </div>
   );
 }
