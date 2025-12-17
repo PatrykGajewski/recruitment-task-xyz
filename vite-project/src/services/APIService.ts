@@ -11,10 +11,10 @@ const fetchAuthWrapper = async (path: string, options: Record<string,string> = {
 
 const selectAllParams = new Map<string,string>([['select', '*']]);
 
-const createSearchParams = (params: Map<string,string>) => {
+const createSearchParams = (params: Map<string,string | number>) => {
     const searchParams = new URLSearchParams();
     params.forEach((value, key) => {
-        searchParams.append(key, value);
+        searchParams.append(key, `${value}`);
     });
     return searchParams;
 }
@@ -29,5 +29,9 @@ export const APIService = {
         const searchParams = createSearchParams(params);
         
         return fetchAuthWrapper(`accounts?${searchParams}`);
+    },
+    getAllAccounts: async (params: Map<string,number> = new Map([['limit', 50], ['offset', 10]])) => {
+        const searchParams = createSearchParams(params);
+        return fetchAuthWrapper(`allaccounts?${searchParams}`);
     }
 };
