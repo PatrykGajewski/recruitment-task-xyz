@@ -1,0 +1,34 @@
+import { useState, useEffect } from "react";
+import { APIService } from "../services/APIService";
+
+export interface AccountResponse {
+    id: string;
+    account_type: string;
+    value: number;
+    currency: string;
+}
+
+export const useAccounts = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
+    const [data, setData] = useState<AccountResponse[]>([]);
+
+    useEffect(() => {
+        const fetchAccountTypes = async () => {
+            try {
+                const response = await (await APIService.getAccounts()).json();
+
+                setData(response);
+            } catch (error) {
+                console.error('Error fetching user accounts:', error);
+                setIsError(true);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchAccountTypes();
+    }, []);
+
+    return { data, isLoading, isError };
+};
