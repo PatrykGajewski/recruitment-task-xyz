@@ -1,5 +1,5 @@
-import Table from "../../components/Table/Table";
-import type { SortDirection } from "../../components/Table/types";
+import Table from "../../components/table/Table";
+import type { SortDirection } from "../../components/table/types";
 
 import { useAccountTypes } from "../../hooks/useAccountTypes";
 import { useAccounts } from "../../hooks/useAccounts";
@@ -18,6 +18,10 @@ const UserAccountsPage = () => {
   });
 
   const memoizedTableData = useMemo(() => {
+    if (!Object.keys(accountTypes.data).length || !users.data.length) {
+      return [];
+    }
+
     return users.data.map((account) => ({
       id: account.id,
       account_type: accountTypes.data[account.account_type] || '',

@@ -1,6 +1,6 @@
-import type { ColumnConfig } from "../../components/Table/types";
+import type { ColumnConfig, SortDirection } from "../../components/table/types";
 import { UserAccountColumn } from "./types";
-import { stringCompare, numberCompare } from "./utils";
+import { stringCompare, numberCompare, accountTypeCompare } from "./utils";
 
 const columnsConfig: ColumnConfig<UserAccountColumn>[] = [
   {
@@ -26,9 +26,12 @@ const columnsConfig: ColumnConfig<UserAccountColumn>[] = [
   },
 ];
 
-const sortingPerColumn = {
+type SortFunction = ((a: string, b: string, direction: SortDirection) => number) |
+ ((a: number, b: number, direction: SortDirection) => number);
+
+const sortingPerColumn: Record<UserAccountColumn, SortFunction> = {
   [UserAccountColumn.Id]: stringCompare,
-  [UserAccountColumn.AccountType]: stringCompare,
+  [UserAccountColumn.AccountType]: accountTypeCompare,
   [UserAccountColumn.Value]: numberCompare,
   [UserAccountColumn.Currency]: stringCompare
 };

@@ -1,4 +1,4 @@
-import type { SortDirection } from "../../components/Table/types";
+import type { SortDirection } from "../../components/table/types";
 
 const stringCompare = (a: string, b: string, direction: SortDirection) => {
   if(direction === 'asc') {
@@ -16,4 +16,17 @@ const numberCompare = (a: number, b: number, direction: SortDirection) => {
   }
 };
 
-export { stringCompare, numberCompare };
+const accountTypeASCOrder = ['standard', 'primary', 'primary+'];
+
+const accountTypeCompare = (a: string, b: string, direction: SortDirection) => {
+  const aIndex = accountTypeASCOrder.indexOf(a);
+  const bIndex = accountTypeASCOrder.indexOf(b);
+
+  if(direction === 'asc') {
+    return aIndex - bIndex;
+  } else {
+    return bIndex - aIndex;
+  }
+}
+
+export { stringCompare, numberCompare, accountTypeCompare };
