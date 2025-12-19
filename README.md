@@ -37,12 +37,15 @@ A React-based web application built with Vite, featuring a sortable table compon
 2. Install dependencies:
 ```npm install```
 
-## Running the Project
 
-1. Start the development server:
+
+## Running the Project
+1. Relying on the `.env.example` file create `.env` file with environmental variables with proper values.
+
+2. Start the development server:
 ```npm run dev```
 
-2. Open your browser and navigate to `http://localhost:5173` to view the application ( by default if the specific port is free ).
+3. Open your browser and navigate to `http://localhost:5173` to view the application ( by default if the specific port is free ).
 
 ## Running Tests
 
